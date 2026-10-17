@@ -1,76 +1,256 @@
 :root {
-  --bg-color: #eef4fb;
-  --card-bg: #ffffff;
-  --text-color: #333333;
-  --btn-bg: #1769aa;
-  --btn-text: #ffffff;
+  --bg-color: #0a0f0d;
+  --card-bg: rgba(16, 26, 21, 0.75);
+  --border-color: rgba(0, 255, 136, 0.2);
+  --text-main: #e0f2fe;
+  --text-muted: #80a695;
+  --neon-green: #00ff88;
+  --neon-green-glow: rgba(0, 255, 136, 0.4);
+  --accent-dark: #052e16;
 }
 
-body.dark-theme {
-  --bg-color: #121212;
-  --card-bg: #1e1e1e;
-  --text-color: #e0e0e0;
-  --btn-bg: #90caf9;
-  --btn-text: #121212;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: 'Prompt', sans-serif;
   background-color: var(--bg-color);
-  color: var(--text-color);
-  margin: 0;
+  color: var(--text-main);
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  transition: all 0.3s ease;
-}
-
-.card {
-  background-color: var(--card-bg);
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 12px 32px #1e3a5f20;
-  text-align: center;
-  max-width: 450px;
-  width: 90%;
-}
-
-.section { margin: 15px 0; }
-
-.skills-list {
-  list-style: none;
-  padding: 0;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.skills-list li {
-  background: rgba(23, 105, 170, 0.1);
-  padding: 6px 12px;
+/* Background Ambient Glow */
+.background-glow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card Styling */
+.profile-card, .card-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover, .card-section:hover {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 20px var(--neon-green-glow);
+  transform: translateY(-2px);
+}
+
+/* Profile Header */
+.profile-card {
+  text-align: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dark);
+  border-radius: 50%;
+  border: 2px solid var(--neon-green);
+  box-shadow: 0 0 15px var(--neon-green-glow);
+}
+
+.avatar-icon {
+  font-size: 2.2rem;
+  color: var(--neon-green);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 255, 136, 0.1);
+  color: var(--neon-green);
+  padding: 4px 12px;
   border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid var(--neon-green);
+  margin-bottom: 12px;
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--neon-green);
+  animation: pulse-animation 1.5s infinite;
+}
+
+@keyframes pulse-animation {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+}
+
+h1 {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.student-id {
+  font-family: 'Fira Code', monospace;
+  color: var(--neon-green);
   font-size: 0.9rem;
 }
 
+/* Sections */
+h2 {
+  font-size: 1.1rem;
+  color: var(--neon-green);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+  padding-bottom: 8px;
+}
+
+p {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Skills Grid */
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: 'Fira Code', monospace;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.skill-tag i {
+  color: var(--neon-green);
+}
+
+/* Status Box */
+.status-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed var(--border-color);
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-family: 'Fira Code', monospace;
+}
+
+.status-icon {
+  color: var(--neon-green);
+  font-size: 1.1rem;
+}
+
+/* Buttons */
 .button-group {
   display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 15px;
+  gap: 12px;
 }
 
-button {
-  background-color: var(--btn-bg);
-  color: var(--btn-text);
-  border: 0;
-  padding: 10px 18px;
+.btn {
+  flex: 1;
+  padding: 12px;
   border-radius: 8px;
+  font-family: 'Prompt', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
-  font-weight: bold;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-hr {
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  margin: 15px 0;
+.btn-primary {
+  background: var(--neon-green);
+  color: #000000;
+  border: none;
+  box-shadow: 0 0 10px var(--neon-green-glow);
+}
+
+.btn-primary:hover {
+  background: #33ff9f;
+  box-shadow: 0 0 20px var(--neon-green);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 255, 136, 0.1);
+  box-shadow: 0 0 10px var(--neon-green-glow);
+}
+
+footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+/* Extra Glow Mode (Toggled via JS) */
+body.glow-mode .background-glow {
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.35) 0%, rgba(0, 0, 0, 0) 70%);
 }
